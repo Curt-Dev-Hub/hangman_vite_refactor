@@ -1,0 +1,12 @@
+.Input_Wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#textInput {
+    width: 25px;
+    height: 30px;
+    margin: 7px;
+    text-align: center;
+}

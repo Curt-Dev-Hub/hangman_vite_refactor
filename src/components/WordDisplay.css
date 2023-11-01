@@ -1,0 +1,9 @@
+/* Finished up here 12/10/2023 */
+/* .wordDisplay :nth-child(2) {
+    visibility: hidden;
+} */
+
+.displayLetter {
+    font-size: 55px;
+    margin: 4px;
+}

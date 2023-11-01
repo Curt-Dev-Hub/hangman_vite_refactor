@@ -1,36 +1,45 @@
 // This component would read a list of words from a .txt file and select a random word for the game. 
-// It would pass this word to the WordDisplay and HangmanDisplay components.
-
+// It would then pass this word to the WordDisplay and HangmanDisplay components.
 
 import { useState, useEffect } from "react";
+import { useWord } from "./WordProvider"; 
+import WordDisplay from "./WordDisplay";
 import dictionary from '../assets/dictionary/dictionary.txt';
 
 
 
 const WordSelector = () => {
-    const [words, setWords] = useState([]);
-    const [selectedWord, setSelectedWord] = useState('');
-    const [error, setError] = useState(null);
+  
+  // create state for currently selected word
+  const [selectedWord, setSelectedWord] = useState('');
+  // create state for error checking 
+  const [error, setError] = useState(null);
+  
+  // *call setWord with new array containing chosenWord when it changes 
+  const { setWord } = useWord();
 
-    useEffect(() => {
-        fetch(dictionary)
-          .then(response => { 
-            if (!response.ok) { 
-                throw Error(response.statusText); 
-            } return response.text();
-            })
-          .then(text => {
-            const wordsArray = text.split('\n');
-            setWords(wordsArray);
-            console.log(wordsArray);
+  useEffect(() => {
+    fetch(dictionary)
+      .then(response => { 
+        if (!response.ok) { 
+            throw Error(response.statusText); 
+        } return response.text();
+        })
 
-            // Select a random word from the array
-            const randomWord = wordsArray[Math.floor(Math.random() * wordsArray.length)];
-            // set random word as current state
-            setSelectedWord(randomWord);
-          })
-          .catch(error => setError(error));
-      }, []);
+      .then(text => {
+        const wordsArray = text.split('\n');
+
+        // Select a random word from the array
+        const randomWord = wordsArray[Math.floor(Math.random() * wordsArray.length)]; 
+        // set random word as current state
+        setSelectedWord(randomWord);
+        
+        // update word in context
+        setWord(randomWord);
+      })
+      .catch(error => setError(error));
+    }, []);
+
 
     if (error) {
         return <div>
@@ -38,7 +47,9 @@ const WordSelector = () => {
         </div>;
     }
 
-    // Pass the selected word to other components here
+    return selectedWord ? <WordDisplay word = { selectedWord }/> : null;
 }
+
+
 
 export default WordSelector;
