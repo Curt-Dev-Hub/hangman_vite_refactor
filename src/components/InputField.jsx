@@ -1,49 +1,14 @@
+//This component would allow the user to input their guesses. 
+//It would pass these guesses up to the HangmanGame component.
+//which would update the game state accordingly.
 
-// import { useState } from 'react';
-// import React from "react";
-// import './InputField.css';
+// Is rendered via the HangmanGame comoponent
 
-//     // restrict entry of numbers or special characters into the below input element
-//     // document.getElementById('textInput').addEventListener('keypress', function (e) {
-//     // var char = e.key;
-//     // if (!(/[a-zA-Z]/.test(char))) {
-//     //     e.preventDefault();
-//     // }
-//     // }); 
+/* props:
+    userSubmit - which is a function passed in from HangmanGame component which deals with logic after submission of input
+*/
 
-// export default function InputField({ userSubmit }) {
-
-//     const [inputValue, setInputValue] = useState("");
-    
-//     const handleInputChange = (e) => {
-//     const char = e.target.value;
-//         if(/[a-zA-Z]/.test(char) || char === "") {
-//             setInputValue(char);
-//         }
-//     }
-
-//     //send value of textInput to userSubmit function in HangmanGame component 
-//     const handleButtonClick = () => {
-//         let inputValue = document.querySelector('#textInput').value;
-//         userSubmit(inputValue);
-//         inputValue = '';
-//     }
-
-//     return (
-//         <div className="Input_Wrapper">
-//             <label htmlFor="textInput">Take Your Guess Here:</label>
-//             {/* have set value of "inputField" to "inputValue" to reflect the current state  */}
-//             <input type="text" id="textInput" value={inputValue} onChange={handleInputChange} maxLength={1}></input>
-//             <button type="button" onClick={handleButtonClick}>Submit Character</button>
-//         </div>
-//     )
-// }
-
-
-
-
-
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './InputField.css';
 
 export default function InputField({ userSubmit }) {
@@ -51,6 +16,12 @@ export default function InputField({ userSubmit }) {
     const [inputValue, setInputValue] = useState("");
     const inputRef = useRef(null); // create a ref
 
+    // useEffect to bring focus back to input on re-render
+    useEffect(() => {
+        inputRef.current.focus();
+    });
+
+    // handle correct behavior of user input 
     const handleInputChange = (e) => {
         const char = e.target.value;
         if(/[a-zA-Z]/.test(char) || char === "") {
@@ -59,9 +30,10 @@ export default function InputField({ userSubmit }) {
     }
 
     //send value of textInput to userSubmit function in HangmanGame component 
-    const handleButtonClick = () => {
+    const handleButtonClick = (evt) => {
         userSubmit(inputValue);
-        inputRef.current.value = ""; // clear the input field
+         // clear the input field
+         setInputValue("");
     }
 
     return (

@@ -86,7 +86,6 @@ const stateImages = [
 
 
 export default function HangmanDisplay({ currentState }) {
-    console.log(currentState);
 
     return (
         <div className="stateImageContainer">
