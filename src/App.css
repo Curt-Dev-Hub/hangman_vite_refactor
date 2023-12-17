@@ -1,7 +1,10 @@
+h3, h4 {
+  margin-top: 0;
+}
+
 #root {
   width: 100%;
   margin: 0 auto;
-  padding: 1rem;
   text-align: center;
   display: flex;
   justify-content: center;
@@ -16,5 +19,27 @@
 
 .heading_text {
   margin-top: 5px;
+  color: dodgerblue;
+  text-decoration: underline;
 }
 
+@media screen and (max-width: 422px) {
+  .heading_text {
+    position: absolute;
+    transform: rotate(270deg);
+    left: -189px;
+    top: 197px;
+  }
+}
+
+@media screen and (max-width: 761px) and (max-height: 400px) {
+  .heading_text {
+      font-size: 29px;
+  }
+}  
+
+@media screen and (min-width: 3000px) and (min-height:1860px) {
+  .heading_text {
+    font-size: 125px;
+  }
+}

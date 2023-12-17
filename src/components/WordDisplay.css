@@ -1,9 +1,32 @@
-/* Finished up here 12/10/2023 */
-/* .wordDisplay :nth-child(2) {
-    visibility: hidden;
-} */
+.wordDisplay {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.wordContainer {
+    display: flex;
+    justify-content: center;
+}
 
 .displayLetter {
-    font-size: 55px;
     margin: 4px;
+}
+
+@media screen and (max-width: 422px) {
+    .displayLetter {
+        font-size: 19px;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    .displayLetter {
+        font-size: 13px;
+    }
+}
+
+@media screen and (min-width: 423px) {
+    .displayLetter {
+        font-size: 31px;
+    }
 }

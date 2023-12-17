@@ -1,5 +1,27 @@
 .hangmanImage {
-    width: 300px;
-    height: 300px;
+    width: 285px;
+    height: 285px;
     border-radius: 4px;
+    opacity: 0.6;
+}
+
+@media screen and (max-width: 422px) {
+    .hangmanImage {
+        width: 93px;
+        height: 81px;
+    }
+}
+
+@media screen and (max-width: 761px ) and (max-height: 400px) {
+    .hangmanImage {
+        width: 128px;
+        height: 146px;
+    }
+}
+
+@media screen and (min-width: 3000px) and (min-height:1860px) {
+    .hangmanImage {
+        width: 570px;
+        height: 570px;
+    }
 }

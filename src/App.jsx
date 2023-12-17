@@ -8,7 +8,7 @@ function App() {
 
   return (
     <div className='appContainer'>
-      <h1 className='heading_text'>React Hangman</h1>
+      <h1 className='heading_text'>Classic Hangman</h1>
       <WordProvider>
         <HangmanGame />
         <WordSelector />

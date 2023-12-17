@@ -1,16 +1,16 @@
 /* 
-props:
-state:
 
-where:
+props: currentState 
+state: n/a
 
 Presentational Component
 
-Task: to 
+Responsibility: To render the correct Hangman image to the UI according to current 
+state of the game. State is passed dowm from HangmanGame component
+
 */
 
 import React from "react";
-import HangmanGame from "./HangmanGame";
 import './HangmanDisplay.css';
 
 import state1 from '../assets/hangman_GIF_states/state1.jpg';
@@ -92,5 +92,4 @@ export default function HangmanDisplay({ currentState }) {
             <img className="hangmanImage" src={ stateImages[currentState].src }></img>
         </div>
     )
-
 }

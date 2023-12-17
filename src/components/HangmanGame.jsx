@@ -24,36 +24,47 @@ export default function HangmanGame() {
     // state to determine when user has ultimately won the game 
     const [gameComplete, setGameComplete] = useState(false);
 
-    // receive the chosen word from WordSelector component, the current state of correct guesses from context provider, and allow access to correctGuesses
-    // "userWinState" is an array which mirrors the word user is trying to guess - all initial values will be "-" but will update along with rendered version in the UI
-    const{ word, setGoodGuesses, userWinState } = useWord();
+    /* 
     
+    receive the chosen "word" from WordSelector component, the current state of correct guesses from context provider, 
+    and allow access to correctGuesses.
+    "userWinState" is an array which mirrors the "word" user is trying to guess - all initial values will be "-" 
+    but will update along with rendered version in the UI
+
+    */
+    const{ word, setGoodGuesses, userWinState, setUserWinState, setReset } = useWord();
+    
+    
+    // useEffect for managing WordSelector reset 
+    useEffect(() => {
+        setReset(true);
+    }, [gameComplete]);
+
+
+    // console.log(word); USED FOR TESTING
 
     // useEffect to check whether game has been won
     useEffect(() => {
-
-        // if - "userWinState" matches "lowerWord"
+        // if - "userWinState" matches "lowerWord" the game has been won 
         if(userWinState.join('') === word) { 
-            setGameComplete(true);
+            setGameComplete(true); // TESTING - TODAY
         }
     }, [userWinState]);
 
-    console.log(Object.values(userWinState));
-
+    // console.log(Object.values(userWinState)); USED FOR TESTING
 
     // function to handle user inputted value, this function is passed to 
     // and called in the InputField component 
     function userSubmit(input) {
-
+        
         // Convert both input and word to lower case for checking - as some words in dictionary.txt begin with a CAPITAL 
         const lowerInput = input.toLowerCase();
         const lowerWord = word.toLowerCase();
 
-    
         // update state of incorrect guesses if user input is not found in "word" variable 
         if(!lowerWord.includes(lowerInput)) {
             setIncorrectGuesses((oldGuesses) => {
-                return [...oldGuesses, lowerInput + ","];
+                return [...oldGuesses, lowerInput];
             });
 
             return setHangmanDisplayState(prevState => prevState +1);
@@ -66,12 +77,23 @@ export default function HangmanGame() {
         }
     }
 
+    // Reset state variables when game complete
+    function resetGame() {
+        setReset(false);
+        setHangmanDisplayState(0);
+        setIncorrectGuesses([]);
+        setGameComplete(false);
+        setGoodGuesses([]);
+        setUserWinState([]);
+    }
+
+
     return (
         <div className="HangmanGame_Container">
             <HangmanDisplay currentState={ hangmanDisplayState } />
-            <InputField userSubmit = { userSubmit }/>
+            <InputField userSubmit = { userSubmit } gameStatus={ gameComplete } hangmanDisplayState={hangmanDisplayState} gameReset={resetGame}/>
             <GuessesDisplay characters={ incorrectGuesses }/>
-            { hangmanDisplayState == 10 || gameComplete ? <GameOver gameStatus={ gameComplete }/> : null }
+            { hangmanDisplayState == 10 || gameComplete ? <GameOver gameStatus={ gameComplete } winningWord={ word }/> : null }
         </div>
     );
 }

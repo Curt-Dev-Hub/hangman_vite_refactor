@@ -1,25 +1,34 @@
 /*
 props: "characters" an array of wrongly guessed characters inputted by user from HangmanGame component
 
-This component needs to display the letters that the user has already guessed.
+Responsibility:
+This component needs to display the letters that the user has already guessed which were incorrect.
 Should expect an array which it will then map through in order to display in the UI
 
 */
 
 import './GuessesDisplay.css';
 import { v4 as uuidv4 } from 'uuid';
-import { useWord } from './WordProvider';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import React from 'react';
 
 
-export default function GuessesDisplay( { characters } ) {
+function GuessesDisplay( { characters } ) {
 
-    // display incorrect user guesses in the UI 
     return (
         <div className='guessesDisplay'>
-            <h4>Your Incorrect Guesses:</h4>
+            <h4>Your Incorrect Guesses Will Appear Here:</h4>
+            <TransitionGroup component={null}>
             {characters.map(char => {
-                return <span className='wrongGuesses' key={ uuidv4() }> { char } </span>
+                return ( 
+                <CSSTransition key={uuidv4()} timeout={500} classNames="pop">
+                    <span className='wrongGuesses' key={ uuidv4() }> { char } </span>
+                </CSSTransition>
+                )
             })}
+            </TransitionGroup>
         </div>
     )
 }
+
+export default React.memo(GuessesDisplay);

@@ -2,4 +2,11 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+@media screen and (max-width: 422px) {
+    .HangmanGame_Container {
+        flex-direction: column;
+    }
 }

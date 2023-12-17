@@ -6,8 +6,6 @@ import { useWord } from "./WordProvider";
 import WordDisplay from "./WordDisplay";
 import dictionary from '../assets/dictionary/dictionary.txt';
 
-
-
 const WordSelector = () => {
   
   // create state for currently selected word
@@ -16,7 +14,8 @@ const WordSelector = () => {
   const [error, setError] = useState(null);
   
   // *call setWord with new array containing chosenWord when it changes 
-  const { setWord } = useWord();
+  // import "reset" state variable to trigger a reset  
+  const { setWord, reset } = useWord();
 
   useEffect(() => {
     fetch(dictionary)
@@ -24,7 +23,7 @@ const WordSelector = () => {
         if (!response.ok) { 
             throw Error(response.statusText); 
         } return response.text();
-        })
+      })
 
       .then(text => {
         const wordsArray = text.split('\n');
@@ -36,9 +35,10 @@ const WordSelector = () => {
         
         // update word in context
         setWord(randomWord);
+        
       })
       .catch(error => setError(error));
-    }, []);
+    }, [reset]);
 
 
     if (error) {
@@ -49,7 +49,5 @@ const WordSelector = () => {
 
     return selectedWord ? <WordDisplay word = { selectedWord }/> : null;
 }
-
-
 
 export default WordSelector;

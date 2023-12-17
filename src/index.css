@@ -5,8 +5,11 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
 
+  background: rgb(34,193,195);
+  background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
+  background-size: cover;
+  background-repeat: no-repeat;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -24,11 +27,13 @@ a:hover {
 }
 
 body {
+  transition: all ease-out 0.5s;
   margin: 0;
   display: flex;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  min-height: 100svh;
 }
 
 h1 {
@@ -37,13 +42,13 @@ h1 {
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
+  border-radius: 4px;
+  border: 2px solid #155ed0f0;
+  padding: 2%;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #36909080;
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -65,5 +70,15 @@ button:focus-visible {
   }
   button {
     background-color: #f9f9f9;
+  }
+}
+
+@media screen and (max-width: 422px) {
+  body {
+    place-items: baseline;
+  }
+
+  :root {
+    padding: 5px;
   }
 }

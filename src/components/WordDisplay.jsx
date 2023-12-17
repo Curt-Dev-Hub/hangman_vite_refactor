@@ -1,12 +1,13 @@
-// This component would display the word or phrase that the user is trying to guess. 
-// It would receive the word from the WordSelector component and the guessed letters from the HangmanGame component, 
-// and update its display accordingly. 
+
 
 /* 
 UI Presentational component
 
-props:
-takes a chosen "word" from WordSelector component in form of a string
+Responsibility: This component would display the word or phrase that the user is trying to guess. 
+It would receive the "word" from the WordSelector component and the correctly guessed letters from the HangmanGame and WordProvider components, 
+and update its display accordingly. 
+
+props: takes a chosen "word" from the WordSelector component in form of a string
 
 state: none
 
@@ -24,7 +25,7 @@ export default function WordDisplay({ word }) {
     
     useEffect(() => {
         setUserWinState(Array.from(document.querySelectorAll('.displayLetter')).map(el => el.textContent));
-    }, [goodGuesses]);
+    }, [goodGuesses, word]); // alteration here as part of reset
     
 
     // begin rendering UI elements once a word has been received from WordProvider via the WordSelector component
@@ -37,9 +38,12 @@ export default function WordDisplay({ word }) {
         if(goodGuesses.length < 1) {
             return (
                 <div className="wordDisplay">
+                    <div className='headingContainer'><h3>Your Mystery Word:</h3></div>
+                    <div className='wordContainer'>
                     {chosenWord.map((el, idx) => {
-                        return <span className="displayLetter" key={idx}> - </span>
+                        return <span className="displayLetter" key={idx}>-</span>
                     })}
+                    </div>
                 </div>
             );
         }
@@ -49,6 +53,8 @@ export default function WordDisplay({ word }) {
         else if(goodGuesses.length > 0) {
             return (
                 <div className="wordDisplay">
+                    <div className='headingContainer'><h3>Your Mystery Word:</h3></div>
+                    <div className='wordContainer'>
                     {chosenWord.map((el, idx) => {
                         // Check letter is in goodGuesses
                         if (goodGuesses.includes(el.toLowerCase())) {
@@ -59,6 +65,7 @@ export default function WordDisplay({ word }) {
                             return <span className="displayLetter" key={idx}> - </span>
                         }
                     })}
+                    </div>
                 </div>
             );
         }

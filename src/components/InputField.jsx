@@ -1,17 +1,27 @@
-//This component would allow the user to input their guesses. 
-//It would pass these guesses up to the HangmanGame component.
-//which would update the game state accordingly.
+/* 
+Responsibility:
+This component would allow the user to input their guesses. 
+It would pass these guesses up to the HangmanGame component, which would update the game state accordingly.
+
+Will also take "gameState" as a prop so we can conditionally disable the input element
+
+*/ 
 
 // Is rendered via the HangmanGame comoponent
 
 /* props:
     userSubmit - which is a function passed in from HangmanGame component which deals with logic after submission of input
+    gameStatus - so this component is aware when the game has been won
+    hangmanDisplayState - so this component knows when the game has been lost
+    gameReset - used for conditional rendering of elements within this component 
 */
+
 
 import React, { useState, useRef, useEffect } from 'react';
 import './InputField.css';
+import { m as motion } from 'framer-motion'; // use the m alias for motion
 
-export default function InputField({ userSubmit }) {
+export default function InputField({ userSubmit, gameStatus, hangmanDisplayState, gameReset }) {
 
     const [inputValue, setInputValue] = useState("");
     const inputRef = useRef(null); // create a ref
@@ -29,19 +39,56 @@ export default function InputField({ userSubmit }) {
         }
     }
 
+    const handleKeyPress = (evt) => {
+        if(evt.key === 'Enter') {
+            userSubmit(inputValue);
+            setInputValue("");
+        }
+        if(inputRef.current) {
+            inputRef.current.focus();
+        }
+    }
+
     //send value of textInput to userSubmit function in HangmanGame component 
     const handleButtonClick = (evt) => {
         userSubmit(inputValue);
-         // clear the input field
-         setInputValue("");
+        // clear the input field
+        setInputValue("");
+        
+        if(inputRef.current) {
+            inputRef.current.focus();
+        }
     }
 
     return (
         <div className="Input_Wrapper">
             <label htmlFor="textInput">Take Your Guess Here:</label>
-            {/* have set value of "inputField" to "inputValue" to reflect the current state  */}
-            <input ref={inputRef} type="text" id="textInput" value={inputValue} onChange={handleInputChange} maxLength={1}></input>
-            <button type="button" onClick={handleButtonClick}>Submit Character</button>
+            <input disabled={gameStatus || hangmanDisplayState >= 10} onKeyDown={handleKeyPress} ref={inputRef} type="text" id="textInput" value={inputValue} onChange={handleInputChange} maxLength={1}></input>
+            {/* can be 2 buttons - one Submit char and Reset which call 2 seperate functions */}
+            {gameStatus === false && hangmanDisplayState < 10 ? 
+            // use the motion button as one of the options in the ternary expression
+            (inputValue != "" ? 
+            // render the animated button
+            <motion.button
+              className='userActionButton'
+              id='charSubmit'
+              type="button"
+              onKeyDown={handleKeyPress}
+              onClick={handleButtonClick}
+              whileHover={{ scale: 1.1, backgroundColor: "lightgreen" }}
+            >
+              Submit Character
+            </motion.button> :
+            // render the regular button
+            <button
+              className='userActionButton'
+              type="button"
+              onKeyDown={handleKeyPress}
+              onClick={handleButtonClick}
+            >
+              Submit Character
+            </button>) :
+            <button className='userActionButton' id='gameReset' type="button" onClick={gameReset}>Have Another Go!</button> }
         </div>
-    )
+    );
 }
