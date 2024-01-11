@@ -64,7 +64,8 @@ export default function InputField({ userSubmit, gameStatus, hangmanDisplayState
         <div className="Input_Wrapper">
             <label htmlFor="textInput">Take Your Guess Here:</label>
             <input disabled={gameStatus || hangmanDisplayState >= 10} onKeyDown={handleKeyPress} ref={inputRef} type="text" id="textInput" value={inputValue} onChange={handleInputChange} maxLength={1}></input>
-            {/* can be 2 buttons - one Submit char and Reset which call 2 seperate functions */}
+            {/* can be 2 buttons - one Submit char or Reset which call 2 seperate functions */}
+            
             {gameStatus === false && hangmanDisplayState < 10 ? 
             // use the motion button as one of the options in the ternary expression
             (inputValue != "" ? 
@@ -74,7 +75,8 @@ export default function InputField({ userSubmit, gameStatus, hangmanDisplayState
               id='charSubmit'
               type="button"
               onKeyDown={handleKeyPress}
-              onClick={handleButtonClick}
+              onMouseUp={handleButtonClick}
+              
               whileHover={{ scale: 1.1, backgroundColor: "lightgreen" }}
             >
               Submit Character
@@ -84,11 +86,11 @@ export default function InputField({ userSubmit, gameStatus, hangmanDisplayState
               className='userActionButton'
               type="button"
               onKeyDown={handleKeyPress}
-              onClick={handleButtonClick}
+              onMouseUp={handleButtonClick}
             >
               Submit Character
             </button>) :
-            <button className='userActionButton' id='gameReset' type="button" onClick={gameReset}>Have Another Go!</button> }
+            <button className='userActionButton' id='gameReset' type="button" onMouseUp={gameReset}>Have Another Go!</button> }
         </div>
     );
 }

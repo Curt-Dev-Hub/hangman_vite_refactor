@@ -29,6 +29,10 @@ label {
   outline: none;
 }
 
+#gameReset {
+  font-weight: 701;
+}
+
 #charSubmit {
     animation: pulse 2s infinite;
 }

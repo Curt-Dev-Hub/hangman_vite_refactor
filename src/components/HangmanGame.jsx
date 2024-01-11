@@ -32,7 +32,7 @@ export default function HangmanGame() {
     but will update along with rendered version in the UI
 
     */
-    const{ word, setGoodGuesses, userWinState, setUserWinState, setReset } = useWord();
+    const{ word, goodGuesses, setGoodGuesses, userWinState, setUserWinState, reset, setReset } = useWord();
     
     
     // useEffect for managing WordSelector reset 
@@ -41,12 +41,10 @@ export default function HangmanGame() {
     }, [gameComplete]);
 
 
-    // console.log(word); USED FOR TESTING
-
     // useEffect to check whether game has been won
     useEffect(() => {
         // if - "userWinState" matches "lowerWord" the game has been won 
-        if(userWinState.join('') === word) { 
+        if(userWinState.join('') === word && gameComplete === false) { // TESTING 29/12/2023 with && condition 
             setGameComplete(true); // TESTING - TODAY
         }
     }, [userWinState]);

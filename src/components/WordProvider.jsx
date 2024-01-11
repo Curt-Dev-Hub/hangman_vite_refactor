@@ -1,6 +1,4 @@
 import { createContext, useContext, useState } from "react";
-import WordSelector from "./WordSelector";
-
 
 // create context object
 const WordContext = createContext();
@@ -12,7 +10,6 @@ export const WordProvider = ({ children }) => {
     const [goodGuesses, setGoodGuesses] = useState([]); //HangmanGame & WordDisplay components 
     // set state for HangmanGame component to decide if user has completed the game
     const [userWinState, setUserWinState] = useState([]); // an array which mirrors the word user is trying to guess - initial values will be "-" but will update along with rendered version in the UI
-
 
     return (
         <WordContext.Provider value={{ word, setWord, goodGuesses, setGoodGuesses, userWinState, setUserWinState, reset, setReset }}>

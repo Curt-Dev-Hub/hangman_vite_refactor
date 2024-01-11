@@ -2,7 +2,7 @@
 // It would then pass this word to the WordDisplay and HangmanDisplay components.
 
 import { useState, useEffect } from "react";
-import { useWord } from "./WordProvider"; 
+import { useWord } from "./WordProvider";
 import WordDisplay from "./WordDisplay";
 import dictionary from '../assets/dictionary/dictionary.txt';
 
@@ -16,6 +16,8 @@ const WordSelector = () => {
   // *call setWord with new array containing chosenWord when it changes 
   // import "reset" state variable to trigger a reset  
   const { setWord, reset } = useWord();
+
+
 
   useEffect(() => {
     fetch(dictionary)
@@ -46,7 +48,7 @@ const WordSelector = () => {
             Error: { error.message }
         </div>;
     }
-
+    // TESTING 29/12/2023
     return selectedWord ? <WordDisplay word = { selectedWord }/> : null;
 }
 
